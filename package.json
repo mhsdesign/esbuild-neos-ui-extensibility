@@ -2,13 +2,16 @@
   "name": "@mhsdesign/esbuild-neos-ui-extensibility",
   "version": "0.0.0",
   "main": "index.js",
-  "author": "Marc Henry Schultz",
-  "license": "MIT",
-  "dependencies": {
-    "@neos-project/neos-ui-extensibility": "^7.3"
+  "scripts": {
+    "copy": "npm-run-all copy:*",
+    "copy:clean": "rm -rf ./@neos-project",
+    "copy:mkdir": "mkdir -p ./@neos-project/neos-ui-extensibility",
+    "copy:src": "cp -r node_modules/@neos-project/neos-ui-extensibility/src ./@neos-project/neos-ui-extensibility",
+    "copy:dist": "cp -r node_modules/@neos-project/neos-ui-extensibility/dist ./@neos-project/neos-ui-extensibility"
   },
   "devDependencies": {
-    "esbuild": "^0.14.31"
+    "@neos-project/neos-ui-extensibility": "^7.3",
+    "npm-run-all": "^4.1.5"
   },
   "peerDependencies": {
     "esbuild": "^0.14.31"

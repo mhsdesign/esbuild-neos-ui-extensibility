@@ -1,5 +1,6 @@
-
 const neosUiConsumerApi = {
+    '@neos-project/neos-ui-extensibility': '@neos-project/neos-ui-extensibility/dist/index.js',
+
     'react': '@neos-project/neos-ui-extensibility/src/shims/vendor/react/index',
     'react-dom': '@neos-project/neos-ui-extensibility/src/shims/vendor/react-dom/index',
     'react-dnd': '@neos-project/neos-ui-extensibility/src/shims/vendor/react-dnd/index',
@@ -27,16 +28,18 @@ const neosUiConsumerApi = {
     '@neos-project/utils-redux': '@neos-project/neos-ui-extensibility/src/shims/neosProjectPackages/utils-redux/index'
 }
 
+const neosUiExtensibility = () => ({
+    name: 'neosUiExtensibility',
+    setup({ onResolve, resolve }) {
+        // neos ui consumer api:
+        // trailing slash / will be tolerated -> as did the webpack impl.
+        const filterRegex = `^(${Object.keys(neosUiConsumerApi).join('|')})/?$`
+        onResolve({ filter: RegExp(filterRegex) }, ({ path, ...options }) =>
+            resolve('@mhsdesign/esbuild-neos-ui-extensibility/' + neosUiConsumerApi[path.replace(/\/$/, '')], options)
+        );
+    },
+})
+
 module.exports = {
-    neosUiExtensibility: () => ({
-        name: 'neosUiExtensibility',
-        setup({ onResolve, resolve }) {
-            // neos ui consumer api:
-            // trailing slash / will be tolerated -> as did the webpack impl.
-            const paths = Object.keys(neosUiConsumerApi)
-            onResolve({ filter: RegExp(`^(${paths.join('|')})/?$`) }, ({ path, ...options }) =>
-                resolve(neosUiConsumerApi[path.replace(/\/$/, '')], options)
-            );
-        },
-    })
+    neosUiExtensibility
 }
