@@ -1,7 +1,16 @@
 {
   "name": "@mhsdesign/esbuild-neos-ui-extensibility",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "main": "index.js",
   "author": "Marc Henry Schultz",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@neos-project/neos-ui-extensibility": "^7.3"
+  },
+  "devDependencies": {
+    "esbuild": "^0.14.31"
+  },
+  "peerDependencies": {
+    "esbuild": "^0.14.31"
+  }
 }
