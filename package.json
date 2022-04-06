@@ -3,6 +3,7 @@
   "version": "0.1.0-beta.1",
   "main": "index.js",
   "scripts": {
+    "prepack": "npm run copy",
     "copy": "npm-run-all copy:*",
     "copy:clean": "rm -rf ./@neos-project",
     "copy:mkdir": "mkdir -p ./@neos-project/neos-ui-extensibility",
