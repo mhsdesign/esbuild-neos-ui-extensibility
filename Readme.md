@@ -7,6 +7,10 @@
 basically the alias resolution of @neos-project/neos-ui-extensibility as esbuild plugin.
 
 ## Usage
+https://www.npmjs.com/package/@mhsdesign/esbuild-neos-ui-extensibility
+```sh
+npm i @mhsdesign/esbuild-neos-ui-extensibility
+```
 
 ```js
 
