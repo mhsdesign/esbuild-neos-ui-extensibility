@@ -1,6 +1,6 @@
 {
   "name": "@mhsdesign/esbuild-neos-ui-extensibility",
-  "version": "0.1.0-beta.2",
+  "version": "0.1.0-beta.3",
   "main": "index.js",
   "scripts": {
     "prepack": "npm run copy",
