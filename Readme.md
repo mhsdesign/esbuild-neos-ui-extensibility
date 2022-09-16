@@ -47,3 +47,7 @@ declare module "@neos-project/neos-ui-extensibility" {
     } from "@mhsdesign/esbuild-neos-ui-extensibility/@neos-project/neos-ui-extensibility/src/registry";
 }
 ```
+
+
+
+No matching export in "../../../../../experiments/esbuild-neos-ui-extensibility/dist/@neos-project/neos-ui-decorators.js" for import "neos"
