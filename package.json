@@ -7,21 +7,19 @@
   ],
   "scripts": {
     "prepack": "npm run copy",
-    "copy": "npm-run-all copy:*",
+    "copy": "pnpm run copy:clean && pnpm run copy:mkdir && pnpm run copy:srcFolder && pnpm run copy:replaceDist",
     "copy:clean": "rm -rf ./@neos-project",
     "copy:mkdir": "mkdir -p ./@neos-project/neos-ui-extensibility",
-    "copy:src": "cp -r node_modules/@neos-project/neos-ui-extensibility/src ./@neos-project/neos-ui-extensibility",
-    "copy:dist": "cp -r node_modules/@neos-project/neos-ui-extensibility/dist ./@neos-project/neos-ui-extensibility"
+    "copy:srcFolder": "cp -r node_modules/@neos-project/neos-ui-extensibility/src ./@neos-project/neos-ui-extensibility",
+    "copy:replaceDist": "find ./@neos-project/neos-ui-extensibility -type f -exec sed -i 's+./dist/+./src/+g' {} +"
   },
   "dependencies": {
-    "@neos-project/positional-array-sorter": "5.2.5",
-    "tslib": "^1.9.3"
+    "@neos-project/positional-array-sorter": "^8.1"
   },
   "devDependencies": {
-    "@neos-project/neos-ui-extensibility": "^7.3",
-    "npm-run-all": "^4.1.5"
+    "@neos-project/neos-ui-extensibility": "^8.1"
   },
   "peerDependencies": {
-    "esbuild": "^0.14.31"
+    "esbuild": "^0.15"
   }
 }
