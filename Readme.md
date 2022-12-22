@@ -31,6 +31,49 @@ esbuild.build({
 })
 ```
 
+### Simple migration
+
+package.json
+```diff
+{
+  "name": "foo/bar",
+  "version": "1.0.0",
+  "scripts": {
+-    "build": "NODE_ENV=production neos-react-scripts build",
+-    "watch": "neos-react-scripts watch"-
++    "build": "node build.js",
++    "watch": "node build.js --watch"
+  },
++  "devDependencies": {
++    "@mhsdesign/esbuild-neos-ui-extensibility": "^0.2.1",
++    "esbuild": "^0.15"
++  }
+-  "devDependencies": {
+-    "@neos-project/neos-ui-extensibility": "^8.0.1"
+-  },
+-  "neos": {
+-    "buildTargetDirectory": "../../Public/NeosUserInterface"
+-  }
+}
+
+```
+
+build.js
+```js
+require("esbuild").build({
+    logLevel: "info",
+    bundle: true,
+    watch: process.argv.includes("--watch"),
+    target: "es2020",
+    entryPoints: {"Plugin": "src/index.js"},
+    loader: {
+        ".js": "tsx",
+    },
+    outdir: "../../Public/NeosUserInterface",
+    plugins: [require("@mhsdesign/esbuild-neos-ui-extensibility").neosUiExtensibility()]
+})
+```
+
 ## How to consume from the Neos Api?
 
 as youre used to from the Webpack implementation:
