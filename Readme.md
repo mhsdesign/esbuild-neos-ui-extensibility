@@ -1,11 +1,65 @@
-# @mhsdesign/esbuild-neos-ui-extensibility
-
-> Be warned.
-
-> Note this package uses super internal top secret parts of the Neos Ui consumer api - use it on your own risk - as there was already a discussion to change the implementation to `Webpack 5 Federation` https://neos-project.slack.com/archives/C0U0KEGDQ/p1618805938027900 and its unknown if Esbuild can archive this.
+# deprecated ~@mhsdesign/esbuild-neos-ui-extensibility~
 
 
-## Neos User Interface Exten­sibility API
+> **Warning**
+>
+> This package is deprecated, because the functionality was moved into the Neos Ui Core with https://github.com/neos/neos-ui/pull/3382
+> You should migrate to use the new (now cleaned up without webpack and babel bloat) `@neos-project/neos-ui-extensibility` in version 8.3 or higher:
+
+### Migration back to `@neos-project/neos-ui-extensibility@8.3.0`
+
+you can already use the beta `8.3.0-beta1`!
+
+package.json
+```diff
+{
+  "name": "foo/bar",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js --watch"
+  },
+  "devDependencies": {
+-    "@mhsdesign/esbuild-neos-ui-extensibility": "^0.2.1",
++    "@neos-project/neos-ui-extensibility": "^8.3.0",
+    "esbuild": "^0.17.0"
+  }
+}
+
+```
+
+build.js
+```diff
+const esbuild = require('esbuild');
+const isWatch = process.argv.includes('--watch');
+
+/** @type {import("esbuild").BuildOptions} */
+const options = {
+    logLevel: "info",
+    bundle: true,
+    target: "es2020",
+    entryPoints: {"Plugin": "src/index.js"},
+    loader: {
+        ".js": "tsx",
+    },
+    outdir: "../../Public/NeosUserInterface",
++    alias: require("@neos-project/neos-ui-extensibility/extensibilityMap.json"),
+-    plugins: [require("@mhsdesign/esbuild-neos-ui-extensibility").neosUiExtensibility()]
+}
+
+
+if (isWatch) {
+    esbuild.context(options).then((ctx) => ctx.watch())
+} else {
+    esbuild.build(options)
+}
+```
+
+-------------
+
+# Original Readme:
+
+## Neos User Interface Extensibility API
 
 For the React UI
 https://docs.neos.io/cms/manual/extending-the-user-interface/react-extensibility-api
@@ -60,10 +114,13 @@ package.json
 
 build.js
 ```js
-require("esbuild").build({
+const esbuild = require('esbuild');
+const isWatch = process.argv.includes('--watch');
+
+/** @type {import("esbuild").BuildOptions} */
+const options = {
     logLevel: "info",
     bundle: true,
-    watch: process.argv.includes("--watch"),
     target: "es2020",
     entryPoints: {"Plugin": "src/index.js"},
     loader: {
@@ -71,7 +128,14 @@ require("esbuild").build({
     },
     outdir: "../../Public/NeosUserInterface",
     plugins: [require("@mhsdesign/esbuild-neos-ui-extensibility").neosUiExtensibility()]
-})
+}
+
+
+if (isWatch) {
+    esbuild.context(options).then((ctx) => ctx.watch())
+} else {
+    esbuild.build(options)
+}
 ```
 
 ## How to consume from the Neos Api?
